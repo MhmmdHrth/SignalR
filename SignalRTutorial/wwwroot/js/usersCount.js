@@ -21,8 +21,7 @@ async function startConnection() {
     await connection.start()
     console.info("Connection to User Hub Successful")
 
-    var response = await connection.invoke("NewWindowLoaded")
-    console.info(response)
+    await connection.send("NewWindowLoaded")
 }
 
 try {
