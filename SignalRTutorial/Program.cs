@@ -36,6 +36,6 @@ app.UseAuthorization();
 
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
-app.MapHub<UserHub>("/hubs/usesrCount");
+app.MapHub<UserHub>("/hubs/userCount");
 
 app.Run();
