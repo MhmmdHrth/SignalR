@@ -1,4 +1,6 @@
-﻿//create connection
+﻿/// <reference path="signalr.js" />
+
+//create connection
 var connection = new signalR.HubConnectionBuilder()
     .withUrl("/hubs/userCount")
     .build()
