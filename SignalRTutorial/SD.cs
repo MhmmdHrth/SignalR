@@ -4,16 +4,18 @@
     {
         static SD()
         {
-            DealthyHallowRace = new();
-            DealthyHallowRace.Add(WAND, 0);
-            DealthyHallowRace.Add(STONE, 0);
-            DealthyHallowRace.Add(CLOAK, 0);
+            VotingCount = new()
+            {
+                { PN, 0 },
+                { PH, 0 },
+                { BN, 0 }
+            };
         }
 
-        public const string WAND = "wand";
-        public const string STONE = "stone";
-        public const string CLOAK = "cloak";
+        public const string PN = "pn";
+        public const string PH = "ph";
+        public const string BN = "bn";
 
-        public static Dictionary<string, int> DealthyHallowRace;
+        public static Dictionary<string, int> VotingCount;
     }
 }

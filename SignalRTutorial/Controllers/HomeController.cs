@@ -7,12 +7,12 @@ namespace SignalRTutorial.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IHubContext<DeathlyHallowsHub> _deathlyHub;
+        private readonly IHubContext<VotingHub> _votingHub;
 
-        public HomeController(ILogger<HomeController> logger, IHubContext<DeathlyHallowsHub> deathlyHub)
+        public HomeController(ILogger<HomeController> logger, IHubContext<VotingHub> votingHub)
         {
             _logger = logger;
-            _deathlyHub = deathlyHub;
+            _votingHub = votingHub;
         }
 
         public IActionResult Index()
@@ -25,15 +25,12 @@ namespace SignalRTutorial.Controllers
             return View();
         }
 
-        public async Task<IActionResult> DeathlyHallows(string type)
+        public async Task<IActionResult> voting(string type)
         {
-            if (SD.DealthyHallowRace.ContainsKey(type))
-                SD.DealthyHallowRace[type]++;
+            if (SD.VotingCount.ContainsKey(type))
+                SD.VotingCount[type]++;
 
-            await _deathlyHub.Clients.All.SendAsync("updateDeathlyHallowCount",
-                                                    SD.DealthyHallowRace[SD.CLOAK],
-                                                    SD.DealthyHallowRace[SD.STONE],
-                                                    SD.DealthyHallowRace[SD.WAND]);
+            await _votingHub.Clients.All.SendAsync("updateVotingCount", SD.VotingCount);
 
             return Accepted();
         }
