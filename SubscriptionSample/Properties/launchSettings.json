@@ -15,6 +15,14 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "https": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_DEVELOPMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7003"
     }
   },
   "iisSettings": {
