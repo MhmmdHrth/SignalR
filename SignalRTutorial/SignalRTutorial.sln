@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionSample", "..\Su
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChattingSample", "..\ChattingSample\ChattingSample.csproj", "{25D6C261-2D97-473E-B7E5-6B76D201AA34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderPlaceSample", "..\OrderPlaceSample\OrderPlaceSample.csproj", "{4C9236BB-6ABE-4FF2-A1B6-8A3832FC3140}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{25D6C261-2D97-473E-B7E5-6B76D201AA34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25D6C261-2D97-473E-B7E5-6B76D201AA34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25D6C261-2D97-473E-B7E5-6B76D201AA34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9236BB-6ABE-4FF2-A1B6-8A3832FC3140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9236BB-6ABE-4FF2-A1B6-8A3832FC3140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9236BB-6ABE-4FF2-A1B6-8A3832FC3140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9236BB-6ABE-4FF2-A1B6-8A3832FC3140}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
