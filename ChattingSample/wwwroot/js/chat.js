@@ -4,6 +4,7 @@ var senderMessage = document.getElementById("chatMessage")
 var receiverEmail = document.getElementById("receiverEmail")
 
 var chatConnection = new signalR.HubConnectionBuilder()
+    .withAutomaticReconnect()
     .withUrl("/hub/chat")
     .build()
 
@@ -31,4 +32,19 @@ chatConnection.on("MessageReceived", (user, message) => {
     var li = document.createElement("li");
     li.textContent = `${user} - ${message}`;
     document.getElementById("messagesList").appendChild(li);
+})
+
+chatConnection.onclose(error => {
+    console.error("error", error)
+    document.body.style.background = "red"
+})
+
+chatConnection.onreconnected(connectionId => {
+    console.error("connectionId", connectionId)
+    document.body.style.background = "green"
+})
+
+chatConnection.onreconnecting(x => {
+    console.error("x", x)
+    document.body.style.background = "orange"
 })
