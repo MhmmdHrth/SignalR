@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ChattingSample.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChattingSample.Data
@@ -9,5 +10,7 @@ namespace ChattingSample.Data
             : base(options)
         {
         }
+
+        public DbSet<ChatRoom> ChatRooms { get; set; }
     }
 }

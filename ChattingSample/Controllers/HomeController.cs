@@ -1,16 +1,21 @@
-﻿using ChattingSample.Models;
+﻿using ChattingSample.Data;
+using ChattingSample.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ChattingSample.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -18,15 +23,19 @@ namespace ChattingSample.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [Authorize]
+        public async Task<IActionResult> Chat()
         {
-            return View();
-        }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var rooms = await _context.ChatRooms.ToListAsync();
+            ChatVM chatVm = new()
+            {
+                Rooms = rooms,
+                MaxRoomAllowed = 4,
+                UserId = userId
+            };
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(chatVm);
         }
     }
 }
