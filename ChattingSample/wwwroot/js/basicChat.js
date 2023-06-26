@@ -5,7 +5,7 @@ var receiverEmail = document.getElementById("receiverEmail")
 
 var chatConnection = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect()
-    .withUrl("/hub/chat")
+    .withUrl("/hub/basicChat")
     .build()
 
 sendMessage.addEventListener("click", async event => {
