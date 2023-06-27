@@ -33,6 +33,12 @@ advChat.on("ReceiveAddRoomMessage", (maxRoom, roomId, roomName, userId, username
 advChat.on("ReceiveDeleteRoomMessage", (deleted, selected, roomName, username) => {
     toastr.success(`${username} has deleted room ${roomName}`)
 })
+advChat.on("ReceivePublicMessage", (roomId, message, roomName, userName) => {
+    addMessage(`[Public Message - ${roomName}] ${userName} says ${message}`)
+})
+advChat.on("ReceivePrivateMessage", (senderId, userName, receiverId, receiverName, message) => {
+    addMessage(`[Private Message - ${rec}] ${userName} says ${message}`)
+})
 
 advChat.onclose(error => {
     
@@ -162,5 +168,35 @@ function fillRoomDropDown() {
             var err = textStatus + ", " + error;
             console.log("Request Failed: " + jqxhr.detail);
         });
+};
 
+function sendPublicMessage() {
+    let inputmsg = document.getElementById("txtPublicMessage")
+    let ddlSelRoom = document.getElementById("ddlSelRoom")
+
+    let roomId = ddlSelRoom.value;
+    let roomName = ddlSelRoom.options[ddlSelRoom.selectedIndex].text
+    let message = inputmsg.value;
+
+    advChat.send("SendPublicMessage", Number(roomId), message, roomName)
+
+    inputmsg.value = ""
+}
+
+function sendPrivateMessage() {
+    let inputmsg = document.getElementById("txtPrivateMessage")
+    let ddlSelUser = document.getElementById("ddlSelUser")
+
+    let receiverId = ddlSelUser.value;
+    let receiverName = ddlSelUser.options[ddlSelUser.selectedIndex].text
+    let message = inputmsg.value;
+
+    advChat.send("SendPrivateMessage", receiverId, receiverName, message)
+    inputmsg.value = ""
+}
+
+function addMessage(message) {
+    var li = document.createElement("li");
+    li.textContent = message;
+    document.getElementById("messagesList").appendChild(li);
 }
