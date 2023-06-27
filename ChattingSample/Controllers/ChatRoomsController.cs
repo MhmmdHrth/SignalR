@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using ChattingSample.Data;
 using ChattingSample.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChattingSample.Controllers
 {
-    [Route("/[controller]")]
+    [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class ChatRoomsController : ControllerBase
     {
@@ -18,14 +20,14 @@ namespace ChattingSample.Controllers
         }
 
         [HttpGet]
-        [Route("/GetChatRooms")]
+        [Route("GetChatRooms")]
         public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRooms()
         {
             return await _context.ChatRooms.ToListAsync();
         }
 
         [HttpGet]
-        [Route("/GetChatUsers")]
+        [Route("GetChatUsers")]
         public async Task<ActionResult<IEnumerable<Object>>> GetChatUsers()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -38,7 +40,7 @@ namespace ChattingSample.Controllers
         }
 
         [HttpPost]
-        [Route("/PostChatRoom")]
+        [Route("PostChatRoom")]
         public async Task<ActionResult<ChatRoom>> PostChatRoom(ChatRoom chatRoom)
         {
             _context.ChatRooms.Add(chatRoom);
@@ -47,9 +49,8 @@ namespace ChattingSample.Controllers
             return CreatedAtAction("GetChatRoom", new { id = chatRoom.Id }, chatRoom);
         }
 
-        // DELETE: api/ChatRooms/5
         [HttpDelete("{id}")]
-        [Route("/DeleteChatRoom/{id}")]
+        [Route("DeleteChatRoom/{id}")]
         public async Task<IActionResult> DeleteChatRoom(int id)
         {
             var chatRoom = await _context.ChatRooms.FindAsync(id);
@@ -61,7 +62,9 @@ namespace ChattingSample.Controllers
             _context.ChatRooms.Remove(chatRoom);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            var room = await _context.ChatRooms.FirstOrDefaultAsync();
+
+            return Ok(new {deleted = id, selected = (room == null ? 0 : room.Id)});
         }
     }
 }

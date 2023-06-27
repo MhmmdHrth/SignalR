@@ -39,6 +39,26 @@ namespace ChattingSample.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
+        public async Task sendAddRoomMessage(int maxRoom, int roomId, string roomName)
+        {
+            var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(UserId))
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == UserId);
+
+                await Clients.All.SendAsync("ReceiveAddRoomMessage", maxRoom, roomId, roomName, UserId, user.UserName);
+            }
+        }
+        public async Task sendDeleteRoomMessage(int deleted, int selected, string roomName)
+        {
+            var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(UserId))
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == UserId);
+
+                await Clients.All.SendAsync("ReceiveDeleteRoomMessage", deleted, selected, roomName, user.UserName);
+            }
+        }
         public static class HubConnections
         {
             //userId/isNotified
