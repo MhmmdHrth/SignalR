@@ -79,7 +79,7 @@ namespace ChattingSample.Hubs
                 var sender = await _context.Users.FirstOrDefaultAsync(u => u.Id == senderId);
                 var users = new[] { sender.Id, receiverId };
 
-                await Clients.Users(users).SendAsync("ReceivePrivateMessage", senderId, sender.UserName, receiverId, receiverName, message);
+                await Clients.Users(users).SendAsync("ReceivePrivateMessage", senderId, sender.UserName, message);
             }
         }
 

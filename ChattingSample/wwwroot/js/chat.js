@@ -1,8 +1,3 @@
-//var sendMessage = document.getElementById("sendMessage")
-//var senderEmail = document.getElementById("senderEmail")
-//var senderMessage = document.getElementById("chatMessage")
-//var receiverEmail = document.getElementById("receiverEmail")
-
 var advChat = new signalR.HubConnectionBuilder()
     .withAutomaticReconnect([0, 1000, 5000, 10000])
     .withUrl("/hub/chat")
@@ -36,8 +31,11 @@ advChat.on("ReceiveDeleteRoomMessage", (deleted, selected, roomName, username) =
 advChat.on("ReceivePublicMessage", (roomId, message, roomName, userName) => {
     addMessage(`[Public Message - ${roomName}] ${userName} says ${message}`)
 })
-advChat.on("ReceivePrivateMessage", (senderId, userName, receiverId, receiverName, message) => {
-    addMessage(`[Private Message - ${rec}] ${userName} says ${message}`)
+advChat.on("ReceivePrivateMessage", (senderId, userName, message) => {
+    let userId = document.getElementById("hdUserId").value
+    let senderText = senderId == userId ? "you" : userName
+
+    addMessage(`[${senderText}] - ${message}`)
 })
 
 advChat.onclose(error => {
